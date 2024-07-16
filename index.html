@@ -1,36 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
-    
-</head>
-<body class="body">
-    
 
-    <div class="flex-container">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>My TO-DO List App</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="styles.css">
+
+    </head>
+
+    <body class="body">
         
-        <div class="mainHeading"> TO DO List </div>
-        <p class="smallHeading"> Get your to do list </p>
-        <input type = "search" class = "addItem" placeholder="to-do list...">
-        <input type="submit" class ="addListButton" value="Add to the List"> 
+        <div class="flex-container">
+            
+            <div class="mainHeading"> TO DO List </div>
+            <p class="smallHeading"> Get your to do list </p>
 
-        <ul class="taskList">
-            <li>
-                first
+            <input type = "text" class = "addItem" id="newTask" placeholder="to-do list...">
+            <div class="editDiv">
+                <input type="submit" class ="addListButton" value="Add to the List" onclick="addTask(document.getElementById('newTask').value)"> 
+                <button class="btnEditDiv" onclick="resetList()">Reset List</button>
+            </div>
+            <button  class="btnAPI" onclick="getFromAPI()">Get From API</button>
+
+            <ul class="taskList" id="myUL">
+                <li> 
+                    <p>first</p> 
+                    <button class="btn" onclick="deleteTask(this)">Delete</i></button>  
+                </li> 
+                <li>
+                    <p>second</p> 
+                    <button class="btn" onclick="deleteTask(this)">Delete</i></button> 
+                </li>
             </ul>
-        </ul>
 
-        
-
-    </div>
-    
+        </div>
 
 
-</body>
+        <script>
+
+            function resetList(){
+                var ul = document.getElementById("myUL");
+                ul.innerHTML = '';
+            }
+
+            function getFromAPI(){
+                fetch("https://jsonplaceholder.typicode.com/todos")
+                    .then(response => {
+                        if (!response.ok){
+                            throw new console.error("Cant get API call");;
+                        } 
+                        return response.json();
+                    })
+                    .then(data => {
+                        // console.log(data)
+                        var ul = document.getElementById("myUL");
+                        data.forEach(element => {
+                            addTask(element.title)
+                        });
+
+                    })
+                    .catch(error =>{
+                        console.error('There was a problem with the fetch operation:', error);
+                    })   
+            }
+
+            function deleteTask(button){
+                var li = button.parentNode;
+                li.remove();
+            }
+
+            function addTask(task){
+                task = task.trim();
+                if (task === ""){
+                    document.getElementById("newTask").value = "";
+                    return
+                }
+                
+                var ul = document.getElementById("myUL");
+                var li = document.createElement("li");
+                
+                var p = document.createElement("p")
+                p.innerText = task;
+
+                var button = document.createElement("button")
+                button.className ="btn"
+                button.onclick = function() { deleteTask(this); };
+                button.innerText = "Delete"
+
+                li.append(p);
+                li.append(button)
+
+                ul.appendChild(li);
+                document.getElementById("newTask").value = "";
+            }
+
+        </script>
+
+    </body>
+
 </html>
