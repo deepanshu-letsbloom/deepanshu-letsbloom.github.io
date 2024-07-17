@@ -18,20 +18,19 @@
             
             <div class="mainHeading"> TO DO List </div>
             <p class="smallHeading"> Get your to do list </p>
-
             <input type = "text" class = "addItem" id="newTask" placeholder="to-do list...">
 
             <div class="editDiv">
                 <input type="submit" class ="addListButton" value="Add to the List" onclick="addTask(document.getElementById('newTask').value)"> 
                 <button class="btnEditDiv" onclick="resetList()">Reset List</button>
             </div>
-            
+
             <button  class="btnAPI" onclick="getFromAPI()">Get From API</button>
 
             <ul class="taskList" id="myUL">
                 <li> 
                     <p>first</p> 
-                    <button class="btn" onclick="deleteTask(this)">Delete</i></button>  
+                    <button class="btn"  onclick="deleteTask(this)">Delete</i></button>  
                 </li> 
                 <li>
                     <p>second</p> 
@@ -94,6 +93,7 @@
                 button.innerText = "Delete"
 
                 li.append(p);
+                li.append(button)
 
                 if (ul.firstChild) {
                     ul.insertBefore(li, ul.firstChild);  // Prepend the new task

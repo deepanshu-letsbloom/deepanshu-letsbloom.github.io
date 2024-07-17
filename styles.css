@@ -13,13 +13,13 @@
 }
 
  
-  .mainHeading{
-    font-size: 4.5vw;
-    margin-top: 110px;
-    font-weight: bold;
+.mainHeading{
+  font-size: 4.5vw;
+  margin-top: 110px;
+  font-weight: bold;
 
 
-  }
+}
 
 .smallHeading{
   font-size: 2vw;
@@ -92,21 +92,27 @@
    /* padding-top: 10px; */
   padding-left: 15px;
   border-radius: 10px;
-  position: relative;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
+  justify-content: center;
 
+}
+
+.taskList li p{
+    width: 20vw;
+    padding-right: 10px;
 }
 
 
 .btn{
-  background-color:  #F3BAC2;
-    position: absolute;
+    background-color:  #F3BAC2;
+    margin-top: 10px;
     bottom: 10px;
     right: 10px;
     height: 2vw;
-    cursor:pointer;
+    cursor: pointer;
     color: red;
+    font-size: 1.2vw;
 
 }
 
